@@ -15,6 +15,7 @@ class Service extends Model
         'name',
         'summary',
         'content',
+        'order_num',
         'published_at',
     ];
 

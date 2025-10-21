@@ -12,7 +12,8 @@ class ServiceRequest extends FormRequest
             'name' => ['required'],
             'summary' => ['required'],
             'content' => ['required'],
-            'published_at' => ['required', 'date'],
+            'order_num' => ['nullable', 'integer'],
+            'published_at' => ['nullable', 'date'],
         ];
     }
 
