@@ -13,8 +13,8 @@ class TestimonialRequest extends FormRequest
             'company' => ['required'],
             'company_uri' => ['nullable'],
             'content' => ['required'],
-            'order_num' => ['required', 'integer'],
-            'published_at' => ['required', 'date'],
+            'order_num' => ['nullable', 'integer'],
+            'published_at' => ['nullable', 'date'],
         ];
     }
 
