@@ -12,7 +12,8 @@ return new class extends Migration {
             $table->string('name');
             $table->text('summary');
             $table->longText('content');
-            $table->timestamp('published_at');
+            $table->unsignedInteger('order_num')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
