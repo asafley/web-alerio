@@ -11,7 +11,7 @@ class ContactRequest extends FormRequest
         return [
             'name' => ['required'],
             'company' => ['nullable'],
-            'phone' => ['nullable'],
+            'phone' => ['nullable', 'phone:US'],
             'email' => ['nullable', 'email', 'max:254'],
             'subject' => ['nullable'],
             'body' => ['required'],
