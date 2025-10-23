@@ -12,7 +12,7 @@
         </h1>
 
         <p className="mt-2 text-neutral-600 text-sm">
-            Last updated: {updated}
+            Last updated: {{ config('company.date_accessibility') }}
         </p>
 
         <section className="mt-6">
@@ -21,7 +21,7 @@
             </h2>
 
             <p className="mt-3 text-neutral-700">
-                {company.name} is committed to ensuring our website is accessible to all people, including individuals with disabilities. We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA and follow best practices for usability, performance, and inclusive design.
+                {{ config('company.name') }} is committed to ensuring our website is accessible to all people, including individuals with disabilities. We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA and follow best practices for usability, performance, and inclusive design.
             </p>
         </section>
 
@@ -97,19 +97,19 @@
             </p>
 
             <address className="mt-3 not-italic text-neutral-700">
-                {company.name}
+                {{ config('company.name') }}
                 <br />
-                {company.address1}
+                {{ config('company.address_1') }}
                 <br />
-                {company.address2}
+                {{ config('company.address_2') }}
                 <br />
-                {company.city}, {company.state} {company.zip}
+                {{ config('company.address_city') }}, {{ config('company.address_state') }} {{ config('company.address_zip') }}
+                <a className="text-blue-700 underline" href="tel:{{ config('company.phone') }}">
+                    {{ config('company.phone') }}
+                </a>
                 <br />
-                <a className="text-blue-700 underline" href={`tel:${company.phone}`}>
-                    {company.phone}
-                </a>{" "}·{" "}
-                <a className="text-blue-700 underline" href={`mailto:${company.email}`}>
-                    {company.email}
+                <a className="text-blue-700 underline" href="mailto:{{ config('company.email_accessibility') }}">
+                    {{ config('company.email_accessibility') }}
                 </a>
             </address>
         </section>

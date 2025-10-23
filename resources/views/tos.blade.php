@@ -12,16 +12,16 @@
             </h1>
 
             <p className="mt-2 text-neutral-600 text-sm">
-                Effective date: {effectiveDate}
+                Effective date: {{ config('company.date_tos') }}
             </p>
 
             <p className="mt-6 text-neutral-700">
                 These Terms of Service (the "Terms") govern your access to and use of the website at
                 {" "}
-                <a className="text-blue-700 underline" href={company.url}>
-                    {company.url}
+                <a className="text-blue-700 underline" href="{{ config('app.url') }}">
+                    {{ config('app.url') }}
                 </a>{" "}
-                operated by {company.name} ("Alerio," "we," "us," or "our"). By accessing or using the
+                operated by {{ config('company.name') }} ("Alerio," "ATG," "we," "us," or "our"). By accessing or using the
                 site, you agree to be bound by these Terms. If you do not agree, please do not use the site.
             </p>
 
@@ -149,20 +149,19 @@
                 </h2>
 
                 <address className="mt-3 not-italic text-neutral-700">
-                    {company.name}
+                    {{ config('company.name') }}
                     <br />
-                    {company.address1}
+                    {{ config('company.address_1') }}
                     <br />
-                    {company.address2}
+                    {{ config('company.address_2') }}
                     <br />
-                    {company.city}, {company.state} {company.zip}
+                    {{ config('company.address_city') }}, {{ config('company.address_state') }} {{ config('company.address_zip') }}
+                    <a className="text-blue-700 underline" href="tel:{{ config('company.phone') }}">
+                        {{ config('company.phone') }}
+                    </a>
                     <br />
-                    <a className="text-blue-700 underline" href={`tel:${company.phone}`}>
-                        {company.phone}
-                    </a>{" "}
-                    · {" "}
-                    <a className="text-blue-700 underline" href={`mailto:${company.email}`}>
-                        {company.email}
+                    <a className="text-blue-700 underline" href="mailto:{{ config('company.email_accessibility') }}">
+                        {{ config('company.email_accessibility') }}
                     </a>
                 </address>
             </section>

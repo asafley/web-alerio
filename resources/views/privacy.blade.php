@@ -8,10 +8,10 @@
     <main className="px-6 md:px-10 py-16 md:py-20 bg-neutral-50">
         <div className="max-w-3xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-semibold">Privacy Policy</h1>
-            <p className="mt-2 text-neutral-600 text-sm">Last updated: {updated}</p>
+            <p className="mt-2 text-neutral-600 text-sm">Last updated: {{ config('company.date_privacy') }}</p>
 
             <p className="mt-6 text-neutral-700">
-                This Privacy Policy explains how { companyData.name } (“we,” “us,” or “our”) collects, uses, and shares information when you visit our website or otherwise interact with us. By using our site, you agree to this policy. If you do not agree, please do not use the site.
+                This Privacy Policy explains how {{ config('company.name') }} (“we,” “us,” or “our”) collects, uses, and shares information when you visit our website or otherwise interact with us. By using our site, you agree to this policy. If you do not agree, please do not use the site.
             </p>
 
             <section className="mt-10">
@@ -211,24 +211,25 @@
             </section>
 
             <section className="mt-8">
-                <h2 className="text-xl font-semibold">Contact Us</h2>
+                <h2 className="text-xl font-semibold">
+                    Contact Us
+                </h2>
+
                 <address className="mt-3 not-italic text-neutral-700">
-                    { companyData.name }
+                    {{ config('company.name') }}
                     <br />
-                    { companyData.address1 }
+                    {{ config('company.address_1') }}
                     <br />
-                    { companyData.address2 }
+                    {{ config('company.address_2') }}
                     <br />
-                    { companyData.city }, { companyData.state } { companyData.zip }
-                    <br />
-                    <a className="text-blue-700 underline" href={ `tel:${companyData.phone}` }>
-                        { companyData.phone }
-                    </a>{" "}
-                    ·{" "}
-                    <a className="text-blue-700 underline" href={ `mailto:${companyData.email}` }>
-                        { companyData.email }
+                    {{ config('company.address_city') }}, {{ config('company.address_state') }} {{ config('company.address_zip') }}
+                    <a className="text-blue-700 underline" href="tel:{{ config('company.phone') }}">
+                        {{ config('company.phone') }}
                     </a>
-                </address>
+                    <br />
+                    <a className="text-blue-700 underline" href="mailto:{{ config('company.email_accessibility') }}">
+                        {{ config('company.email_accessibility') }}
+                    </a>
             </section>
 
             <p className="mt-10 text-xs text-neutral-500">

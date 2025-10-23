@@ -34,4 +34,25 @@ return [
     'phone' => env('COMPANY_PHONE', '1-303-468-2077'),
     'fax' => env('COMPANY_FAX', '1-303-468-2077'),
     'toll_free' => env('COMPANY_TOLL_FREE', '1-800-222-1234'),
+
+    /*
+     |--------------------------------------------------------------------------
+     | Company Email
+     |--------------------------------------------------------------------------
+     */
+
+    'email' => env('COMPANY_EMAIL', 'info@aleriotechgroup.com'),
+    'email_accessibility' => env('COMPANY_EMAIL_ACCESSIBILITY', 'support@aleriotechgroup.com'),
+    'email_privacy' => env('COMPANY_EMAIL_PRIVACY', 'support@aleriotechgroup.com'),
+    'email_tos' => env('COMPANY_EMAIL_TOS', 'support@aleriotechgroup.com'),
+
+    /*
+     |--------------------------------------------------------------------------
+     | Company Important Dates
+     |--------------------------------------------------------------------------
+     */
+
+    'date_privacy' => env('COMPANY_DATE_PRIVACY', '2025-11-01'),
+    'date_tos' => env('COMPANY_DATE_TOS', '2025-11-01'),
+    'date_accessibility' => env('COMPANY_DATE_ACCESSIBILITY', '2025-11-01'),
 ];
