@@ -15,7 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Alerio Technology Group'),
     'company' => env('COMPANY_NAME', 'Alerio Technology Group'),
-
+    'company_short' => env('COMPANY_SHORT', 'ATG'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
