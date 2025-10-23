@@ -9,6 +9,19 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Legal Routes
+Route::get('/privacy', function () {
+    return view('privacy');
+});
+
+Route::get('/tos', function () {
+    return view('tos');
+});
+
+route::get('/accessibility', function () {
+    return view('accessibility');
+});
+
 // Default Routes
 Route::get('/default', function () {
     return view('welcome');
