@@ -421,12 +421,7 @@
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="py-4 bg-light border-top">
-            <div class="container text-center text-muted">
-                <p>&copy; 2025 {{ config('company.name') }}. All rights reserved.</p>
-            </div>
-        </footer>
+        @include('partials.foot')
     </div>
 
     <script>
