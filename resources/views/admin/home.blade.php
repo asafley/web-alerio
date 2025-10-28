@@ -1,4 +1,4 @@
-<!-- resources/views/home.blade.php -->
+<!-- resources/views/admin/home.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
