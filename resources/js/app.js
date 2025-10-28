@@ -3,8 +3,13 @@ import '../css/app.css';
 import 'bootstrap';
 
 // Import jQuery
-import jQuery from 'jquery';
-window.$ = jQuery;
+//import jQuery from 'jquery';
+//window.$ = jQuery;
+
+// Import Alpine
+import Alpine from 'alpinejs';
+window.Alpine = Alpine;
+Alpine.start();
 
 // Import Three.js
 import * as THREE from 'three';
