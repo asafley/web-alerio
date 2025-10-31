@@ -10,6 +10,7 @@ class PostRequest extends FormRequest
     {
         return [
             'headline_uri' => ['required'],
+            'slug' => ['required'],
             'title' => ['required'],
             'subtitle' => ['nullable'],
             'summary' => ['nullable'],
@@ -18,6 +19,7 @@ class PostRequest extends FormRequest
             'seo_summary' => ['nullable'],
             'is_headliner' => ['boolean'],
             'published_at' => ['nullable', 'date'],
+            'tags' => ['nullable', 'array'],
             'author_id' => ['required'],
             'author_name' => ['nullable'],
             'author_uri' => ['nullable'],

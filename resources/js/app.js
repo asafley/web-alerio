@@ -1,23 +1,17 @@
 // Import Bootstrap styles and JavaScript
 import '../css/app.css';
-import 'bootstrap';
 
 // Import jQuery
-//import jQuery from 'jquery';
-//window.$ = jQuery;
+import jQuery from 'jquery';
+window.$ = jQuery;
 
-// Import Alpine
-import Alpine from 'alpinejs';
-window.Alpine = Alpine;
-Alpine.start();
+// Import Bootstrap
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
 
 // Import Three.js
 import * as THREE from 'three';
 window.THREE = THREE;
-
-// Import Lexical
-import { createEditor } from 'lexical';
-window.createEditor = createEditor;
 
 // Import Three.js background
 import { ThreeBackground } from './three-background.js';

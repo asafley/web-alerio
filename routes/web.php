@@ -59,10 +59,17 @@ Route::prefix('admin')->group(function () {
         return view('admin.partners');
     })->name('admin.partners');
 
-    // Page to manage blog posts
-    Route::get('/posts', function () {
-        return view('admin.posts');
-    })->name('admin.posts');
+    Route::prefix('/posts')->group(function () {
+        // Page to manage blog categories
+        Route::get('/', function () {
+            return view('admin.posts.index');
+        })->name('admin.posts');
+
+        // Page to manage blog tags
+        Route::get('/create', function () {
+            return view('admin.posts.editor');
+        })->name('admin.posts.create');
+    });
 
     // Page to manage project highlights
     Route::get('/projects', function () {

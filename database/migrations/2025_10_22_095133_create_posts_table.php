@@ -31,6 +31,8 @@ return new class extends Migration {
             $table->boolean('is_headliner');
             // Published_At - Timestamp to indicate when the blog post is published, null is not published
             $table->timestamp('published_at')->nullable();
+            // Tags - JSON to represent the tags associated with the blog post
+            $table->json('tags')->nullable();
             // Author - Foreign Key to the User table
             $table->ulid('author_id');
             // Author_Name - String to represent the name of the author of the blog post
