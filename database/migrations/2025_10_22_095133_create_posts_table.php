@@ -28,7 +28,7 @@ return new class extends Migration {
             // SEO_Summary - Text to provide a brief overview of the blog post for SEO
             $table->text('seo_summary')->nullable();
             // Is_Headliner - Boolean to indicate whether the blog post is a headliner or not for front page
-            $table->boolean('is_headliner');
+            $table->boolean('is_headliner')->default(false);
             // Published_At - Timestamp to indicate when the blog post is published, null is not published
             $table->timestamp('published_at')->nullable();
             // Tags - JSON to represent the tags associated with the blog post

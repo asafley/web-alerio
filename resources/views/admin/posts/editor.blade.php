@@ -25,11 +25,8 @@
                             name="headline_uri"
                             class="form-control"
                             placeholder="Enter headline URI"
-                            value="{{ old('headline_uri') }}"
+                            value=""
                         >
-                        @error('title')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Post Title -->
@@ -39,13 +36,10 @@
                             type="text"
                             id="title"
                             name="title"
-                            class="form-control @error('title') is-invalid @enderror"
+                            class="form-control"
                             placeholder="Enter post title"
-                            value="{{ old('title') }}"
+                            value=""
                         >
-                        @error('title')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
 `                   <!-- Post Subtitle -->
@@ -55,13 +49,10 @@
                             type="text"
                             id="subtitle"
                             name="subtitle"
-                            class="form-control @error('subtitle') is-invalid @enderror"
+                            class="form-control"
                             placeholder="Enter post subtitle"
-                            value="{{ old('subtitle') }}"
+                            value=""
                         >
-                        @error('subtitle')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Post Slug -->
@@ -71,13 +62,11 @@
                             type="text"
                             id="slug"
                             name="slug"
-                            class="form-control @error('slug') is-invalid @enderror"
+                            class="form-control"
                             placeholder="auto-generated-slug"
-                            value="{{ old('slug') }}"
+                            value=""
+                            readonly
                         >
-                        @error('slug')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Summary of the post for frontpage -->
@@ -86,13 +75,10 @@
                         <textarea
                             id="summary"
                             name="summary"
-                            class="form-control @error('summary') is-invalid @enderror"
+                            class="form-control"
                             placeholder="Enter a brief summary of the post"
                             rows="3"
-                        >{{ old('summary') }}</textarea>
-                        @error('summary')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
+                        ></textarea>
                     </div>
 
                     <!-- Post HTML Page Content -->
@@ -102,13 +88,10 @@
                         <textarea
                             id="content"
                             name="content"
-                            class="form-control @error('content') is-invalid @enderror"
+                            class="form-control"
                             placeholder="Enter the full HTML content of the post"
                             rows="3"
-                        >{{ old('content') }}</textarea>
-                        @error('content')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
+                        ></textarea>
                     </div>
 
                     <!-- Post Tags -->
@@ -118,13 +101,10 @@
                             type="text"
                             id="tags"
                             name="tags"
-                            class="form-control @error('tags') is-invalid @enderror"
+                            class="form-control"
                             placeholder="Enter tags separated by commas"
-                            value="{{ old('tags') }}"
+                            value=""
                         >
-                        @error('tags')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Post SEO Title -->
@@ -134,13 +114,10 @@
                             type="text"
                             id="seo_title"
                             name="seo_title"
-                            class="form-control @error('seo_title') is-invalid @enderror"
+                            class="form-control"
                             placeholder="Enter SEO title"
-                            value="{{ old('seo_title') }}"
+                            value=""
                         >
-                        @error('seo_title')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Post SEO Summary -->
@@ -149,13 +126,10 @@
                         <textarea
                             id="seo_summary"
                             name="seo_summary"
-                            class="form-control @error('seo_summary') is-invalid @enderror"
+                            class="form-control"
                             placeholder="Enter SEO summary"
                             rows="3"
-                        >{{ old('seo_summary') }}</textarea>
-                        @error('seo_summary')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
+                        ></textarea>
                     </div>
 
                     <!-- Whether or not the post is featured -->
@@ -164,13 +138,9 @@
                             type="checkbox"
                             id="is_headliner"
                             name="is_headliner"
-                            class="form-check-input @error('is_headliner') is-invalid @enderror"
-                            {{ old('is_headliner') ? 'checked' : '' }}
+                            class="form-check-input"
                         >
                         <label for="is_headliner" class="form-check-label fw-semibold">Featured Post</label>
-                        @error('is_headliner')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Whether or not the post published at date will be null or not -->
@@ -179,13 +149,9 @@
                             type="checkbox"
                             id="is_published"
                             name="is_published"
-                            class="form-check-input @error('is_published') is-invalid @enderror"
-                            {{ old('is_headliner') ? 'checked' : '' }}
+                            class="form-check-input"
                         >
                         <label for="is_published" class="form-check-label fw-semibold">Not Published</label>
-                        @error('is_published')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Date of when the post is published -->
@@ -195,18 +161,14 @@
                             type="datetime-local"
                             id="published_at"
                             name="published_at"
-                            class="form-control @error('published_at') is-invalid @enderror"
-                            value="{{ old('published_at') }}"
+                            class="form-control"
                         >
-                        @error('published_at')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Author Info (Read-Only) -->
                     <!-- TODO: Pull from authenticated user -->
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">Author Id</label>
+                        <label for="author_id" class="form-label fw-semibold">Author Id</label>
                         <input
                             type="text"
                             id="author_id"
@@ -218,7 +180,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">Author Name</label>
+                        <label for="author_name" class="form-label fw-semibold">Author Name</label>
                         <input
                             type="text"
                             id="author_name"
@@ -230,7 +192,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">Author Uri</label>
+                        <label for="author_uri" class="form-label fw-semibold">Author Uri</label>
                         <input
                             type="text"
                             id="author_uri"
@@ -347,12 +309,10 @@
                             }
 
                             // Success - show message and redirect
-                            alert('Post saved successfully!');
                             window.location.href = '{{ route("admin.posts") }}';
 
                         } catch (error) {
                             console.error('Error:', error);
-                            alert('Error saving post: ' + error.message);
                         } finally {
                             // Restore button state
                             submitBtn.disabled = false;

@@ -13,6 +13,7 @@ class PostController extends Controller
 
     public function index()
     {
+        // TODO : Enable authorization
         //$this->authorize('viewAny', Post::class);
 
         $posts = Post::all();
@@ -28,12 +29,14 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
+        // TODO : Enable authorization
         //$this->authorize('create', Post::class);
 
-        //return new PostResource(Post::create($request->validated()));
+        // Create a new Post using the validated data from the request
+        $newPost = Post::create($request->validated());
 
-        // Return not implemented exception
-        return response()->json(['message' => 'Not implemented', 'data' => $request->validated()], 501);
+        // Return the newly created Post in JSON format with 201 status code
+        return response()->json(PostResource::make($newPost), 201);
     }
 
     public function show(Post $post)
