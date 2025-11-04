@@ -13,6 +13,16 @@
                 </h1>
             </div>
 
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="card shadow-sm mb-4" style="display: none;">
+                <div class="card-body text-center py-5">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted mb-0">Loading post data...</p>
+                </div>
+            </div>
+
             <!-- Form for Posts Editor -->
             <form id="post-form" class="card shadow-sm">
                 <div class="card-body">
@@ -220,8 +230,58 @@
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
+                    // Get Post if editing an existing one
+                    const postId = "{{ $postId ?? 'null' }}";
+                    const loadingIndicator = document.getElementById('loading-indicator');
+
+                    if (postId !== 'null') {
+                        loadingIndicator.style.display = 'block';
+
+                        fetch(`/api/v1/admin/posts/${postId}`, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Populate form fields with existing post data
+                            $('#headline_uri').val(data.headline_uri);
+                            $('#title').val(data.title);
+                            $('#subtitle').val(data.subtitle);
+                            $('#slug').val(data.slug);
+                            $('#summary').val(data.summary);
+                            $('#content').val(data.content);
+                            $('#tags').val(data.tags);
+                            $('#seo_title').val(data.seo_title);
+                            $('#seo_summary').val(data.seo_summary);
+                            $('#is_headliner').prop('checked', data.is_headliner);
+                            if (data.published_at) {
+                                const publishedAt = new Date(data.published_at);
+                                const localDatetime = publishedAt.toISOString().slice(0,16);
+                                $('#published_at').val(localDatetime);
+                                $('#is_published').prop('checked', false);
+                                $('#published_at').prop('disabled', false);
+                            } else {
+                                $('#is_published').prop('checked', true);
+                                $('#published_at').prop('disabled', true);
+                            }
+                            $('#author_id').val(data.author_id);
+                            $('#author_name').val(data.author_name);
+                            $('#author_uri').val(data.author_uri);
+                        })
+                        .catch(error => console.error('Error fetching post data:', error))
+                        .finally(() => {
+                            loadingIndicator.style.display = 'none';
+                        });
+                    }
+
                     // Auto-generate slug from title
                     $('#title').on('change', function() {
+                        if (postId !== 'null') {
+                            return; // Don't auto-generate slug if editing existing post
+                        }
+
                         let slug;
 
                         slug = $(this).val()
@@ -244,79 +304,160 @@
 
                     // Form submission with JSON
                     $('#post-form').on('submit', async function(e) {
-                        e.preventDefault();
+                        if (postId === 'null') {
+                            e.preventDefault();
 
-                        // Show loading state
-                        let submitBtn;
-                        submitBtn = this.querySelector('button[type="submit"]');
-                        const originalText = submitBtn.innerHTML;
-                        submitBtn.disabled = true;
-                        submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Saving...';
+                            // Show loading state
+                            let submitBtn;
+                            submitBtn = this.querySelector('button[type="submit"]');
+                            const originalText = submitBtn.innerHTML;
+                            submitBtn.disabled = true;
+                            submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Saving...';
+                            loadingIndicator.style.display = 'block';
 
-                        // Check if published_at should be null or not
-                        if ($('#is_published').is(':checked')) {
-                            $('#published_at').val('');
-                        }
-
-                        try {
-                            // Collect form data
-                            const formData = {
-                                headline_uri: $('#headline_uri').val(),
-                                title: $('#title').val(),
-                                subtitle: $('#subtitle').val(),
-                                slug: $('#slug').val(),
-                                summary: $('#summary').val(),
-                                content: $('#content').val(),
-                                tags: $('#tags').val(),
-                                seo_title: $('#seo_title').val(),
-                                seo_summary: $('#seo_summary').val(),
-                                is_headliner: $('#is_headliner').is(':checked'),
-                                published_at: $('#published_at').val(),
-                                author_id: $('#author_id').val(),
-                                author_name: $('#author_name').val(),
-                                author_uri: $('#author_uri').val()
-                            };
-
-                            // Send JSON request
-                            const response = await fetch('/api/v1/admin/posts', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json',
-                                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                                },
-                                body: JSON.stringify(formData)
-                            });
-
-                            const data = await response.json();
-
-                            if (!response.ok) {
-                                // Handle validation errors
-                                if (data.errors) {
-                                    Object.keys(data.errors).forEach(field => {
-                                        const input = document.getElementById(field);
-                                        if (input) {
-                                            input.classList.add('is-invalid');
-                                            const feedback = input.parentElement.querySelector('.invalid-feedback');
-                                            if (feedback) {
-                                                feedback.textContent = data.errors[field][0];
-                                                feedback.style.display = 'block';
-                                            }
-                                        }
-                                    });
-                                }
-                                throw new Error(data.message || 'Failed to save post');
+                            // Check if published_at should be null or not
+                            if ($('#is_published').is(':checked')) {
+                                $('#published_at').val('');
                             }
 
-                            // Success - show message and redirect
-                            window.location.href = '{{ route("admin.posts") }}';
+                            try {
+                                // Collect form data
+                                const formData = {
+                                    headline_uri: $('#headline_uri').val(),
+                                    title: $('#title').val(),
+                                    subtitle: $('#subtitle').val(),
+                                    slug: $('#slug').val(),
+                                    summary: $('#summary').val(),
+                                    content: $('#content').val(),
+                                    tags: $('#tags').val(),
+                                    seo_title: $('#seo_title').val(),
+                                    seo_summary: $('#seo_summary').val(),
+                                    is_headliner: $('#is_headliner').is(':checked'),
+                                    published_at: $('#published_at').val(),
+                                    author_id: $('#author_id').val(),
+                                    author_name: $('#author_name').val(),
+                                    author_uri: $('#author_uri').val()
+                                };
 
-                        } catch (error) {
-                            console.error('Error:', error);
-                        } finally {
-                            // Restore button state
-                            submitBtn.disabled = false;
-                            submitBtn.innerHTML = originalText;
+                                // Send JSON request
+                                const response = await fetch('/api/v1/admin/posts', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json',
+                                        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                    },
+                                    body: JSON.stringify(formData)
+                                });
+
+                                const data = await response.json();
+
+                                if (!response.ok) {
+                                    // Handle validation errors
+                                    if (data.errors) {
+                                        Object.keys(data.errors).forEach(field => {
+                                            const input = document.getElementById(field);
+                                            if (input) {
+                                                input.classList.add('is-invalid');
+                                                const feedback = input.parentElement.querySelector('.invalid-feedback');
+                                                if (feedback) {
+                                                    feedback.textContent = data.errors[field][0];
+                                                    feedback.style.display = 'block';
+                                                }
+                                            }
+                                        });
+                                    }
+                                    throw new Error(data.message || 'Failed to save post');
+                                }
+
+                                // Success - show message and redirect
+                                window.location.href = '{{ route("admin.posts") }}';
+
+                            } catch (error) {
+                                console.error('Error:', error);
+                            } finally {
+                                // Restore button state
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = originalText;
+                                loadingIndicator.style.display = 'none';
+                            }
+                        } else {
+                            e.preventDefault();
+
+                            // Show loading state
+                            let submitBtn;
+                            submitBtn = this.querySelector('button[type="submit"]');
+                            const originalText = submitBtn.innerHTML;
+                            submitBtn.disabled = true;
+                            submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Updating...';
+                            loadingIndicator.style.display = 'block';
+
+                            // Check if published_at should be null or not
+                            if ($('#is_published').is(':checked')) {
+                                $('#published_at').val('');
+                            }
+
+                            try {
+                                // Collect form data
+                                const formData = {
+                                    headline_uri: $('#headline_uri').val(),
+                                    title: $('#title').val(),
+                                    subtitle: $('#subtitle').val(),
+                                    slug: $('#slug').val(),
+                                    summary: $('#summary').val(),
+                                    content: $('#content').val(),
+                                    tags: $('#tags').val(),
+                                    seo_title: $('#seo_title').val(),
+                                    seo_summary: $('#seo_summary').val(),
+                                    is_headliner: $('#is_headliner').is(':checked'),
+                                    published_at: $('#published_at').val(),
+                                    author_id: $('#author_id').val(),
+                                    author_name: $('#author_name').val(),
+                                    author_uri: $('#author_uri').val()
+                                };
+
+                                // Send JSON request
+                                const response = await fetch(`/api/v1/admin/posts/${postId}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json',
+                                        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                    },
+                                    body: JSON.stringify(formData)
+                                });
+
+                                const data = await response.json();
+
+                                if (!response.ok) {
+                                    // Handle validation errors
+                                    if (data.errors) {
+                                        Object.keys(data.errors).forEach(field => {
+                                            const input = document.getElementById(field);
+                                            if (input) {
+                                                input.classList.add('is-invalid');
+                                                const feedback = input.parentElement.querySelector('.invalid-feedback');
+                                                if (feedback) {
+                                                    feedback.textContent = data.errors[field][0];
+                                                    feedback.style.display = 'block';
+                                                }
+                                            }
+                                        });
+                                    }
+                                    throw new Error(data.message || 'Failed to update post');
+                                }
+
+                                // Success - show message and redirect
+                                window.location.href = '{{ route("admin.posts") }}';
+
+                            } catch (error) {
+                                console.error('Error:', error);
+                            } finally {
+                                // Restore button state
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = originalText;
+                                loadingIndicator.style.display = 'none';
+                            }
                         }
                     });
                 });

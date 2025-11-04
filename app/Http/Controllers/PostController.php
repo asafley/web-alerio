@@ -20,11 +20,13 @@ class PostController extends Controller
 
         if ($posts->isEmpty()) {
             // Return an empty JSON array with 200 status code
-            return response()->json([], 200);
+            return response()->json([
+                "data" => [],
+            ], 200);
         }
 
         // Return collection of Posts in JSON format
-        return PostResource::collection($posts);
+        return response()->json(PostResource::collection($posts), 200);
     }
 
     public function store(PostRequest $request)
@@ -41,35 +43,26 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $this->authorize('view', $post);
+        //$this->authorize('view', $post);
 
-        //return new PostResource($post);
-
-        // Return not implemented exception
-        return response()->json(['message' => 'Not implemented'], 501);
+        return response()->json(PostResource::make($post), 200);
     }
 
     public function update(PostRequest $request, Post $post)
     {
-        $this->authorize('update', $post);
+        //$this->authorize('update', $post);
 
-        //$post->update($request->validated());
+        $status = $post->update($request->validated());
 
-        //return new PostResource($post);
-
-        // Return not implemented exception
-        return response()->json(['message' => 'Not implemented'], 501);
+        return response()->json(PostResource::make($post), $status ? 200 : 201);
     }
 
     public function destroy(Post $post)
     {
-        $this->authorize('delete', $post);
+        //$this->authorize('delete', $post);
 
-        //$post->delete();
+        $post->delete();
 
-        //return response()->json();
-
-        // Return not implemented exception
-        return response()->json(['message' => 'Not implemented'], 501);
+        return response()->json([], 200);
     }
 }
