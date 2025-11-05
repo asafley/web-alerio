@@ -34,7 +34,7 @@ Route::prefix('admin')->group(function () {
         return view('admin.home');
     })->name('admin.home');
 
-    // Group of routes to manage blog contacts
+    // Group of routes to manage contacts via form
     Route::prefix('/contacts')->group(function () {
         // Page to manage blog categories
         Route::get('/', function () {
@@ -57,10 +57,23 @@ Route::prefix('admin')->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    // Page to manage industries for homepage
-    Route::get('/industries', function () {
-        return view('admin.industries');
-    })->name('admin.industries');
+    // Group of routes to manage industrials / verticals
+    Route::prefix('/industries')->group(function () {
+        // Page to manage blog categories
+        Route::get('/', function () {
+            return view('admin.industries.index');
+        })->name('admin.industries');
+
+        // Page to manage blog posts
+        Route::get('/create', function () {
+            return view('admin.industries.editor');
+        })->name('admin.industries.create');
+
+        // Page to manage blog contacts
+        Route::get('/edit/{industryId}', function ($industryId) {
+            return view('admin.industries.editor', ['industryId' => $industryId]);
+        })->name('admin.industries.edit');
+    });
 
     // Page to manage media assets
     Route::get('/media', function () {

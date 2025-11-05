@@ -13,40 +13,54 @@ class IndustryController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Industry::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Industry::class);
 
-        return IndustryResource::collection(Industry::all());
+        $industries = Industry::all();
+
+        if ($industries->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Industries in JSON format
+        return response()->json(IndustryResource::collection($industries), 200);
     }
 
     public function store(IndustryRequest $request)
     {
-        $this->authorize('create', Industry::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Industry::class);
 
-        return new IndustryResource(Industry::create($request->validated()));
+        // Create a new Industry using the validated data from the request
+        $newIndustry = Industry::create($request->validated());
+
+        // Return the newly created Industry in JSON format with 201 status code
+        return response()->json(IndustryResource::make($newIndustry), 201);
     }
 
     public function show(Industry $industry)
     {
-        $this->authorize('view', $industry);
+        //$this->authorize('view', $industry);
 
-        return new IndustryResource($industry);
+        return response()->json(IndustryResource::make($industry), 200);
     }
 
     public function update(IndustryRequest $request, Industry $industry)
     {
-        $this->authorize('update', $industry);
+        //$this->authorize('update', $industry);
 
-        $industry->update($request->validated());
+        $status = $industry->update($request->validated());
 
-        return new IndustryResource($industry);
+        return response()->json(IndustryResource::make($industry), $status ? 200 : 201);
     }
 
     public function destroy(Industry $industry)
     {
-        $this->authorize('delete', $industry);
+        //$this->authorize('delete', $industry);
 
         $industry->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }
