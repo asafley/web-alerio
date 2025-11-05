@@ -34,10 +34,23 @@ Route::prefix('admin')->group(function () {
         return view('admin.home');
     })->name('admin.home');
 
-    // Page to manage Contact Form submissions
-    Route::get('/contacts', function () {
-        return view('admin.contacts');
-    })->name('admin.contacts');
+    // Group of routes to manage blog contacts
+    Route::prefix('/contacts')->group(function () {
+        // Page to manage blog categories
+        Route::get('/', function () {
+            return view('admin.contacts.index');
+        })->name('admin.contacts');
+
+        // Page to manage blog posts
+        Route::get('/create', function () {
+            return view('admin.contacts.editor');
+        })->name('admin.contacts.create');
+
+        // Page to manage blog contacts
+        Route::get('/edit/{contactId}', function ($contactId) {
+            return view('admin.contacts.editor', ['contactId' => $contactId]);
+        })->name('admin.contacts.edit');
+    });
 
     // Page to view dashboard and analytics
     Route::get('/dashboard', function () {

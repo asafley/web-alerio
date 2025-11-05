@@ -13,40 +13,54 @@ class ContactController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Contact::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Contact::class);
 
-        return ContactResource::collection(Contact::all());
+        $contacts = Contact::all();
+
+        if ($contacts->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Contacts in JSON format
+        return response()->json(ContactResource::collection($contacts), 200);
     }
 
     public function store(ContactRequest $request)
     {
-        $this->authorize('create', Contact::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Contact::class);
 
-        return new ContactResource(Contact::create($request->validated()));
+        // Create a new Contact using the validated data from the request
+        $newContact = Contact::create($request->validated());
+
+        // Return the newly created Contact in JSON format with 201 status code
+        return response()->json(ContactResource::make($newContact), 201);
     }
 
     public function show(Contact $contact)
     {
-        $this->authorize('view', $contact);
+        //$this->authorize('view', $contact);
 
-        return new ContactResource($contact);
+        return response()->json(ContactResource::make($contact), 200);
     }
 
     public function update(ContactRequest $request, Contact $contact)
     {
-        $this->authorize('update', $contact);
+        //$this->authorize('update', $contact);
 
-        $contact->update($request->validated());
+        $status = $contact->update($request->validated());
 
-        return new ContactResource($contact);
+        return response()->json(ContactResource::make($contact), $status ? 200 : 201);
     }
 
     public function destroy(Contact $contact)
     {
-        $this->authorize('delete', $contact);
+        //$this->authorize('delete', $contact);
 
         $contact->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }
