@@ -20,9 +20,7 @@ class PostController extends Controller
 
         if ($posts->isEmpty()) {
             // Return an empty JSON array with 200 status code
-            return response()->json([
-                "data" => [],
-            ], 200);
+            return response()->json([], 200);
         }
 
         // Return collection of Posts in JSON format
