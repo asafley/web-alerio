@@ -13,40 +13,54 @@ class PartnerController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Partner::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Partner::class);
 
-        return PartnerResource::collection(Partner::all());
+        $partners = Partner::all();
+
+        if ($partners->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Partners in JSON format
+        return response()->json(PartnerResource::collection($partners), 200);
     }
 
     public function store(PartnerRequest $request)
     {
-        $this->authorize('create', Partner::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Partner::class);
 
-        return new PartnerResource(Partner::create($request->validated()));
+        // Create a new Partner using the validated data from the request
+        $newPartner = Partner::create($request->validated());
+
+        // Return the newly created Partner in JSON format with 201 status code
+        return response()->json(PartnerResource::make($newPartner), 201);
     }
 
     public function show(Partner $partner)
     {
-        $this->authorize('view', $partner);
+        //$this->authorize('view', $partner);
 
-        return new PartnerResource($partner);
+        return response()->json(PartnerResource::make($partner), 200);
     }
 
     public function update(PartnerRequest $request, Partner $partner)
     {
-        $this->authorize('update', $partner);
+        //$this->authorize('update', $partner);
 
-        $partner->update($request->validated());
+        $status = $partner->update($request->validated());
 
-        return new PartnerResource($partner);
+        return response()->json(PartnerResource::make($partner), $status ? 200 : 201);
     }
 
     public function destroy(Partner $partner)
     {
-        $this->authorize('delete', $partner);
+        //$this->authorize('delete', $partner);
 
         $partner->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }

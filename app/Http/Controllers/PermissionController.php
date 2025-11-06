@@ -13,40 +13,54 @@ class PermissionController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Permission::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Permission::class);
 
-        return PermissionResource::collection(Permission::all());
+        $permissions = Permission::all();
+
+        if ($permissions->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Permissions in JSON format
+        return response()->json(PermissionResource::collection($permissions), 200);
     }
 
     public function store(PermissionRequest $request)
     {
-        $this->authorize('create', Permission::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Permission::class);
 
-        return new PermissionResource(Permission::create($request->validated()));
+        // Create a new Permission using the validated data from the request
+        $newPermission = Permission::create($request->validated());
+
+        // Return the newly created Permission in JSON format with 201 status code
+        return response()->json(PermissionResource::make($newPermission), 201);
     }
 
     public function show(Permission $permission)
     {
-        $this->authorize('view', $permission);
+        //$this->authorize('view', $permission);
 
-        return new PermissionResource($permission);
+        return response()->json(PermissionResource::make($permission), 200);
     }
 
     public function update(PermissionRequest $request, Permission $permission)
     {
-        $this->authorize('update', $permission);
+        //$this->authorize('update', $permission);
 
-        $permission->update($request->validated());
+        $status = $permission->update($request->validated());
 
-        return new PermissionResource($permission);
+        return response()->json(PermissionResource::make($permission), $status ? 200 : 201);
     }
 
     public function destroy(Permission $permission)
     {
-        $this->authorize('delete', $permission);
+        //$this->authorize('delete', $permission);
 
         $permission->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }

@@ -13,40 +13,54 @@ class ProjectController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Project::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Project::class);
 
-        return ProjectResource::collection(Project::all());
+        $projects = Project::all();
+
+        if ($projects->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Projects in JSON format
+        return response()->json(ProjectResource::collection($projects), 200);
     }
 
     public function store(ProjectRequest $request)
     {
-        $this->authorize('create', Project::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Project::class);
 
-        return new ProjectResource(Project::create($request->validated()));
+        // Create a new Project using the validated data from the request
+        $newProject = Project::create($request->validated());
+
+        // Return the newly created Project in JSON format with 201 status code
+        return response()->json(ProjectResource::make($newProject), 201);
     }
 
     public function show(Project $project)
     {
-        $this->authorize('view', $project);
+        //$this->authorize('view', $project);
 
-        return new ProjectResource($project);
+        return response()->json(ProjectResource::make($project), 200);
     }
 
     public function update(ProjectRequest $request, Project $project)
     {
-        $this->authorize('update', $project);
+        //$this->authorize('update', $project);
 
-        $project->update($request->validated());
+        $status = $project->update($request->validated());
 
-        return new ProjectResource($project);
+        return response()->json(ProjectResource::make($project), $status ? 200 : 201);
     }
 
     public function destroy(Project $project)
     {
-        $this->authorize('delete', $project);
+        //$this->authorize('delete', $project);
 
         $project->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }

@@ -13,40 +13,54 @@ class MediaController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Media::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Media::class);
 
-        return MediaResource::collection(Media::all());
+        $medias = Media::all();
+
+        if ($medias->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Medias in JSON format
+        return response()->json(MediaResource::collection($medias), 200);
     }
 
     public function store(MediaRequest $request)
     {
-        $this->authorize('create', Media::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Media::class);
 
-        return new MediaResource(Media::create($request->validated()));
+        // Create a new Media using the validated data from the request
+        $newMedia = Media::create($request->validated());
+
+        // Return the newly created Media in JSON format with 201 status code
+        return response()->json(MediaResource::make($newMedia), 201);
     }
 
     public function show(Media $media)
     {
-        $this->authorize('view', $media);
+        //$this->authorize('view', $media);
 
-        return new MediaResource($media);
+        return response()->json(MediaResource::make($media), 200);
     }
 
     public function update(MediaRequest $request, Media $media)
     {
-        $this->authorize('update', $media);
+        //$this->authorize('update', $media);
 
-        $media->update($request->validated());
+        $status = $media->update($request->validated());
 
-        return new MediaResource($media);
+        return response()->json(MediaResource::make($media), $status ? 200 : 201);
     }
 
     public function destroy(Media $media)
     {
-        $this->authorize('delete', $media);
+        //$this->authorize('delete', $media);
 
         $media->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }

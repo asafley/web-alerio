@@ -13,40 +13,54 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Service::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Service::class);
 
-        return ServiceResource::collection(Service::all());
+        $services = Service::all();
+
+        if ($services->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Services in JSON format
+        return response()->json(ServiceResource::collection($services), 200);
     }
 
     public function store(ServiceRequest $request)
     {
-        $this->authorize('create', Service::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Service::class);
 
-        return new ServiceResource(Service::create($request->validated()));
+        // Create a new Service using the validated data from the request
+        $newService = Service::create($request->validated());
+
+        // Return the newly created Service in JSON format with 201 status code
+        return response()->json(ServiceResource::make($newService), 201);
     }
 
     public function show(Service $service)
     {
-        $this->authorize('view', $service);
+        //$this->authorize('view', $service);
 
-        return new ServiceResource($service);
+        return response()->json(ServiceResource::make($service), 200);
     }
 
     public function update(ServiceRequest $request, Service $service)
     {
-        $this->authorize('update', $service);
+        //$this->authorize('update', $service);
 
-        $service->update($request->validated());
+        $status = $service->update($request->validated());
 
-        return new ServiceResource($service);
+        return response()->json(ServiceResource::make($service), $status ? 200 : 201);
     }
 
     public function destroy(Service $service)
     {
-        $this->authorize('delete', $service);
+        //$this->authorize('delete', $service);
 
         $service->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }

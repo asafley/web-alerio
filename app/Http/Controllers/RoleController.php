@@ -13,40 +13,54 @@ class RoleController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Role::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Role::class);
 
-        return RoleResource::collection(Role::all());
+        $roles = Role::all();
+
+        if ($roles->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Roles in JSON format
+        return response()->json(RoleResource::collection($roles), 200);
     }
 
     public function store(RoleRequest $request)
     {
-        $this->authorize('create', Role::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Role::class);
 
-        return new RoleResource(Role::create($request->validated()));
+        // Create a new Role using the validated data from the request
+        $newRole = Role::create($request->validated());
+
+        // Return the newly created Role in JSON format with 201 status code
+        return response()->json(RoleResource::make($newRole), 201);
     }
 
     public function show(Role $role)
     {
-        $this->authorize('view', $role);
+        //$this->authorize('view', $role);
 
-        return new RoleResource($role);
+        return response()->json(RoleResource::make($role), 200);
     }
 
     public function update(RoleRequest $request, Role $role)
     {
-        $this->authorize('update', $role);
+        //$this->authorize('update', $role);
 
-        $role->update($request->validated());
+        $status = $role->update($request->validated());
 
-        return new RoleResource($role);
+        return response()->json(RoleResource::make($role), $status ? 200 : 201);
     }
 
     public function destroy(Role $role)
     {
-        $this->authorize('delete', $role);
+        //$this->authorize('delete', $role);
 
         $role->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }

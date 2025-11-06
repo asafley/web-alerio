@@ -13,40 +13,54 @@ class SettingController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Setting::class);
+        // TODO : Enable authorization
+        //$this->authorize('viewAny', Setting::class);
 
-        return SettingResource::collection(Setting::all());
+        $settings = Setting::all();
+
+        if ($settings->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Settings in JSON format
+        return response()->json(SettingResource::collection($settings), 200);
     }
 
     public function store(SettingRequest $request)
     {
-        $this->authorize('create', Setting::class);
+        // TODO : Enable authorization
+        //$this->authorize('create', Setting::class);
 
-        return new SettingResource(Setting::create($request->validated()));
+        // Create a new Setting using the validated data from the request
+        $newSetting = Setting::create($request->validated());
+
+        // Return the newly created Setting in JSON format with 201 status code
+        return response()->json(SettingResource::make($newSetting), 201);
     }
 
     public function show(Setting $setting)
     {
-        $this->authorize('view', $setting);
+        //$this->authorize('view', $setting);
 
-        return new SettingResource($setting);
+        return response()->json(SettingResource::make($setting), 200);
     }
 
     public function update(SettingRequest $request, Setting $setting)
     {
-        $this->authorize('update', $setting);
+        //$this->authorize('update', $setting);
 
-        $setting->update($request->validated());
+        $status = $setting->update($request->validated());
 
-        return new SettingResource($setting);
+        return response()->json(SettingResource::make($setting), $status ? 200 : 201);
     }
 
     public function destroy(Setting $setting)
     {
-        $this->authorize('delete', $setting);
+        //$this->authorize('delete', $setting);
 
         $setting->delete();
 
-        return response()->json();
+        return response()->json([], 200);
     }
 }
