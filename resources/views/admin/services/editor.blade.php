@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('partials.head', ['title' => 'Uservice Editor - Admin'])
+    @include('partials.head', ['title' => 'Services Editor - Admin'])
 </head>
 <body class="bg-light">
     <div id="app">
         <div class="container py-5">
             <div class="mb-4">
                 <h1 class="h2">
-                    Uservice Editor
+                    Services Editor
                 </h1>
             </div>
 

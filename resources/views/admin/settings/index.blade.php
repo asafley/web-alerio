@@ -2,17 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('partials.head', ['title' => 'Usettings Management - Admin'])
+    @include('partials.head', ['title' => 'Settings Management - Admin'])
 </head>
 <body class="bg-light">
 <div id="app">
     <div class="container py-5">
         <div class="mb-4 d-flex justify-content-between align-items-center">
             <h1 class="h2 mb-0">
-                Posts Management
+                Settings Management
             </h1>
             <a href="{{ route('admin.settings.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-2"></i>New Usetting
+                <i class="bi bi-plus-circle me-2"></i>New Settings
             </a>
         </div>
 
@@ -36,7 +36,7 @@
         </div>
 
         <script>
-            async function loadUsettings() {
+            async function loadSettings() {
                 try {
                     // Fetch posts from API which will return JSON data in "data"
                     const response = await fetch('/api/v1/admin/settings');

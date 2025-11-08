@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('partials.head', ['title' => 'Urole Editor - Admin'])
+    @include('partials.head', ['title' => 'Role Editor - Admin'])
 </head>
 <body class="bg-light">
     <div id="app">

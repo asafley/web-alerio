@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('partials.head', ['title' => 'Upermissions Management - Admin'])
+    @include('partials.head', ['title' => 'Permissions Management - Admin'])
 </head>
 <body class="bg-light">
 <div id="app">

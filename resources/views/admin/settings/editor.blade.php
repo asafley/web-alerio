@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('partials.head', ['title' => 'Usetting Editor - Admin'])
+    @include('partials.head', ['title' => 'Settings Editor - Admin'])
 </head>
 <body class="bg-light">
     <div id="app">
         <div class="container py-5">
             <div class="mb-4">
                 <h1 class="h2">
-                    Usetting Editor
+                    Settings Editor
                 </h1>
             </div>
 
