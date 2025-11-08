@@ -27,6 +27,24 @@ class QuestionController extends Controller
         return response()->json(QuestionResource::collection($questions), 200);
     }
 
+    /*
+     * Public index method to retrieve all questions without authorization
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function publicIndex()
+    {
+        $questions = Question::all();
+
+        if ($questions->isEmpty()) {
+            // Return an empty JSON array with 200 status code
+            return response()->json([], 200);
+        }
+
+        // Return collection of Questions in JSON format
+        return response()->json(QuestionResource::collection($questions), 200);
+    }
+
     public function store(QuestionRequest $request)
     {
         // TODO : Enable authorization

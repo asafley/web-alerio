@@ -18,4 +18,8 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('projects', \App\Http\Controllers\ProjectController::class);
         Route::apiResource('settings', \App\Http\Controllers\SettingController::class);
     });
+
+    route::prefix('public')->group(function (){
+        Route::get('faqs', [\App\Http\Controllers\QuestionController::class, 'publicIndex']);
+    });
 });
