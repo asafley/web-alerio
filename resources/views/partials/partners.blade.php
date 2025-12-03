@@ -25,8 +25,9 @@
             Our Partners
         </h2>
 
-        <div>
-            <ul class="list-unstyled d-flex flex-nowrap overflow-auto py-2 gap-3" style="scroll-snap-type: x mandatory;">
+        <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-outline-secondary me-2" aria-label="Scroll left" onclick="document.getElementById('partners-track').scrollBy({left: -320, behavior: 'smooth'})">&#8592;</button>
+            <ul id="partners-track" class="list-unstyled d-flex flex-nowrap overflow-auto py-2 gap-3" style="scroll-snap-type: x mandatory;">
                 @foreach($items as $item)
                     <li class="flex-shrink-0" style="scroll-snap-align: start;">
                         <div class="bg-white border rounded p-3 d-flex align-items-center justify-content-center" style="width: 160px; height: 100px;">
@@ -39,6 +40,7 @@
                     </li>
                 @endforeach
             </ul>
+            <button type="button" class="btn btn-outline-secondary ms-2" aria-label="Scroll right" onclick="document.getElementById('partners-track').scrollBy({left: 320, behavior: 'smooth'})">&#8594;</button>
         </div>
     </div>
 </section>
