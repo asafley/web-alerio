@@ -9,6 +9,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
 // Legal Routes
 Route::prefix('legal')->group(function () {
     // Page for Privacy Policy
