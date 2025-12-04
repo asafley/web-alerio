@@ -10,21 +10,25 @@
                     'quote' => 'Alérion transformed our IT reliability. Tickets dropped and our staff productivity improved overnight.',
                     'name' => 'Jordan M.',
                     'role' => 'Director of Operations, K–12 District',
+                    'url' => 'https://www.google.com/',
                 ],
                 [
                     'quote' => 'Their cybersecurity team is proactive and responsive—we sleep better knowing our data is protected.',
                     'name' => 'Alex P.',
                     'role' => 'CFO, Local Government',
+                    'url' => '',
                 ],
                 [
                     'quote' => 'Cloud migration was seamless and cost savings were real. Our apps are faster and more resilient.',
                     'name' => 'Riley S.',
                     'role' => 'IT Manager, Healthcare',
+                    'url' => '',
                 ],
                 [
                     'quote' => 'From network design to emergency alerts, they delivered a safer, more connected campus.',
                     'name' => 'Taylor K.',
                     'role' => 'Facilities Lead, Charter School',
+                    'url' => '',
                 ],
             ];
         @endphp
@@ -37,8 +41,15 @@
                         <div class="card-body d-flex flex-column">
                             <p class="mb-3">“{{ $item['quote'] }}”</p>
                             <div class="mt-auto">
-                                <div class="fw-semibold">{{ $item['name'] }}</div>
-                                <div class="text-muted small">{{ $item['role'] }}</div>
+                                @if (!empty($item['url']))
+                                    <a href="{{ $item['url'] }}" class="text-decoration-none fw-semibold" target="_blank" rel="noopener">
+                                        <div class="fw-semibold text-decoration-none">{{ $item['name'] }}</div>
+                                        <div class="text-muted small">{{ $item['role'] }}</div>
+                                    </a>
+                                @else
+                                    <div class="fw-semibold">{{ $item['name'] }}</div>
+                                    <div class="text-muted small">{{ $item['role'] }}</div>
+                                @endif
                             </div>
                         </div>
                     </div>
